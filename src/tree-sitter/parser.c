@@ -6,7 +6,7 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <inttypes.h>
-#include "tree_sitter/api.h"
+#include "api.h"
 #include "./alloc.h"
 #include "./array.h"
 #include "./atomic.h"

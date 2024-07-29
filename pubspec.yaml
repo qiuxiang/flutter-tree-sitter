@@ -35,8 +35,6 @@ flutter:
 
 ffigen:
   output: "lib/bindings.g.dart"
-  compiler-opts:
-    - "-I./src/include"
   headers:
     entry-points:
       - "./src/tree-sitter/lib.c"

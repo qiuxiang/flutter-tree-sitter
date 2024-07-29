@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.10)
 
 project(flutter_tree_sitter_library VERSION 0.0.1 LANGUAGES C)
 
-include_directories("include")
 add_library(flutter_tree_sitter SHARED
   "flutter_tree_sitter.c"
 )

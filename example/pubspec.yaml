@@ -1,4 +1,4 @@
-name: tree_sitter_example
+name: example
 description: "Demonstrates how to use the flutter_tree_sitter plugin."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
