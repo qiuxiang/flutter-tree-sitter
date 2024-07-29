@@ -1,4 +1,4 @@
-name: tree_sitter
+name: flutter_tree_sitter
 description: "A new Flutter FFI plugin project."
 version: 0.0.1
 homepage:

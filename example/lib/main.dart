@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:tree_sitter/lib.dart';
+import 'package:flutter_tree_sitter/lib.dart';
 
 void main() {
   runApp(const App());

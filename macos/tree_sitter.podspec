@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint tree_sitter.podspec` to validate before publishing.
+# Run `pod lib lint flutter_tree_sitter.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'tree_sitter'
+  s.name             = 'flutter_tree_sitter'
   s.version          = '0.0.1'
   s.summary          = 'A new Flutter FFI plugin project.'
   s.description      = <<-DESC

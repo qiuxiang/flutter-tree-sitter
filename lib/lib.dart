@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'bindings.g.dart';
 
-const _libName = 'tree_sitter';
+const _libName = 'flutter_tree_sitter';
 final _lib = () {
   if (Platform.isMacOS || Platform.isIOS) {
     return DynamicLibrary.open('$_libName.framework/$_libName');
