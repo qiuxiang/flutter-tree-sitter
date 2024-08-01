@@ -17,3 +17,5 @@ final _lib = () {
   throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
 }();
 final treeSitter = NativeLibrary(_lib);
+final free =
+    treeSitter.ts_current_free.asFunction<void Function(Pointer<Void>)>();

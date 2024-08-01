@@ -1260,7 +1260,7 @@ class NativeLibrary {
 
   late final _freePtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'free_');
+          'free');
   late final _free =
       _freePtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
