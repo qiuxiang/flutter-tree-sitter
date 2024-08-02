@@ -44,3 +44,6 @@ ffigen:
   functions:
     include:
       - "ts_.*"
+  globals:
+    include:
+      - "ts_.*"

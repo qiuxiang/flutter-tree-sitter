@@ -19,6 +19,88 @@ class NativeLibrary {
           lookup)
       : _lookup = lookup;
 
+  late final ffi.Pointer<
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Size)>>>
+      _ts_current_malloc = _lookup<
+              ffi.Pointer<
+                  ffi
+                  .NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Size)>>>(
+          'ts_current_malloc');
+
+  ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Size)>>
+      get ts_current_malloc => _ts_current_malloc.value;
+
+  set ts_current_malloc(
+          ffi.Pointer<
+                  ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Size)>>
+              value) =>
+      _ts_current_malloc.value = value;
+
+  late final ffi.Pointer<
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Pointer<ffi.Void> Function(ffi.Size, ffi.Size)>>>
+      _ts_current_calloc = _lookup<
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Pointer<ffi.Void> Function(
+                      ffi.Size, ffi.Size)>>>('ts_current_calloc');
+
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Size, ffi.Size)>>
+      get ts_current_calloc => _ts_current_calloc.value;
+
+  set ts_current_calloc(
+          ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Pointer<ffi.Void> Function(ffi.Size, ffi.Size)>>
+              value) =>
+      _ts_current_calloc.value = value;
+
+  late final ffi.Pointer<
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Pointer<ffi.Void> Function(
+                      ffi.Pointer<ffi.Void>, ffi.Size)>>> _ts_current_realloc =
+      _lookup<
+          ffi.Pointer<
+              ffi.NativeFunction<
+                  ffi.Pointer<ffi.Void> Function(
+                      ffi.Pointer<ffi.Void>, ffi.Size)>>>('ts_current_realloc');
+
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>, ffi.Size)>>
+      get ts_current_realloc => _ts_current_realloc.value;
+
+  set ts_current_realloc(
+          ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Pointer<ffi.Void> Function(
+                          ffi.Pointer<ffi.Void>, ffi.Size)>>
+              value) =>
+      _ts_current_realloc.value = value;
+
+  late final ffi.Pointer<
+          ffi.Pointer<
+              ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>>
+      _ts_current_free = _lookup<
+              ffi.Pointer<
+                  ffi
+                  .NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>>(
+          'ts_current_free');
+
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
+      get ts_current_free => _ts_current_free.value;
+
+  set ts_current_free(
+          ffi.Pointer<
+                  ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
+              value) =>
+      _ts_current_free.value = value;
+
   /// Create a new parser.
   ffi.Pointer<TSParser> ts_parser_new() {
     return _ts_parser_new();
