@@ -3469,27 +3469,6 @@ class NativeLibrary {
       _ts_query_start_byte_for_patternPtr
           .asFunction<int Function(ffi.Pointer<TSQuery>, int)>();
 
-  /// Get the byte offset where the given pattern ends in the query's source.
-  ///
-  /// This can be useful when combining queries by concatenating their source
-  /// code strings.
-  int ts_query_end_byte_for_pattern(
-    ffi.Pointer<TSQuery> self,
-    int pattern_index,
-  ) {
-    return _ts_query_end_byte_for_pattern(
-      self,
-      pattern_index,
-    );
-  }
-
-  late final _ts_query_end_byte_for_patternPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Uint32 Function(ffi.Pointer<TSQuery>,
-              ffi.Uint32)>>('ts_query_end_byte_for_pattern');
-  late final _ts_query_end_byte_for_pattern = _ts_query_end_byte_for_patternPtr
-      .asFunction<int Function(ffi.Pointer<TSQuery>, int)>();
-
   /// Get all of the predicates for the given pattern in the query.
   ///
   /// The predicates are represented as a single array of steps. There are three
@@ -10334,6 +10313,20 @@ class NativeLibrary {
   late final __ts_dupPtr =
       _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Int)>>('_ts_dup');
   late final __ts_dup = __ts_dupPtr.asFunction<int Function(int)>();
+
+  ffi.Pointer<TSTreeCursor> tree_cursor_new(
+    TSNode node,
+  ) {
+    return _tree_cursor_new(
+      node,
+    );
+  }
+
+  late final _tree_cursor_newPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<TSTreeCursor> Function(TSNode)>>(
+          'tree_cursor_new');
+  late final _tree_cursor_new = _tree_cursor_newPtr
+      .asFunction<ffi.Pointer<TSTreeCursor> Function(TSNode)>();
 }
 
 final class __fsid_t extends ffi.Struct {
@@ -10907,9 +10900,6 @@ final class QueryPattern extends ffi.Struct {
 
   @ffi.Uint32()
   external int start_byte;
-
-  @ffi.Uint32()
-  external int end_byte;
 
   @ffi.Bool()
   external bool is_non_local;

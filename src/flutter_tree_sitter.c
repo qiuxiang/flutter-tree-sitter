@@ -1,5 +1,7 @@
 #include "tree-sitter/lib.c"
 
-void free_(void *ptr) {
-  free(ptr);
+TSTreeCursor *tree_cursor_new(TSNode node) {
+  TSTreeCursor *self = ts_malloc(sizeof(TSTreeCursor));
+  ts_tree_cursor_init((TreeCursor *)self, node);
+  return self;
 }
