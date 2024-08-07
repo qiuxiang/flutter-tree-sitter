@@ -21,9 +21,9 @@ class Highlighter {
       errorType,
     );
     final error = TSQueryError.fromValue(errorType.value);
-    free(queryBuf);
-    free(errorOffset);
-    free(errorType);
+    malloc.free(queryBuf);
+    malloc.free(errorOffset);
+    malloc.free(errorType);
     if (error != TSQueryError.TSQueryErrorNone) {
       throw error;
     }
