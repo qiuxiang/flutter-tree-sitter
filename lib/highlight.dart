@@ -29,10 +29,12 @@ class Highlighter {
     }
   }
 
+  /// Release memory.
   void delete() {
     treeSitter.ts_query_delete(query);
   }
 
+  /// Transform [TSNode] to semantic tokens.
   HighlightMap highlight(TSNode rootNode) {
     final highlightMap = HighlightMap();
     final queryCursor = treeSitter.ts_query_cursor_new();
@@ -41,14 +43,15 @@ class Highlighter {
     while (treeSitter.ts_query_cursor_next_match(queryCursor, match)) {
       for (var i = 0; i < match.ref.capture_count; i += 1) {
         final capture = match.ref.captures[i];
-        final start = treeSitter.ts_node_start_byte(capture.node);
-        final end = treeSitter.ts_node_end_byte(capture.node);
         final nameLength = malloc<Uint32>();
         final name = treeSitter
             .ts_query_capture_name_for_id(query, capture.index, nameLength)
             .cast<Utf8>()
             .toDartString(length: nameLength.value);
-        final position = (start, end);
+        final position = (
+          treeSitter.ts_node_start_byte(capture.node),
+          treeSitter.ts_node_end_byte(capture.node)
+        );
         if (!highlightMap.containsKey(position)) {
           highlightMap[position] = name;
         }

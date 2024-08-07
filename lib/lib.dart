@@ -16,10 +16,16 @@ final _lib = () {
   }
   throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
 }();
+
+/// Tree-Sitter bindings.
 final treeSitter = NativeLibrary(_lib);
 
 final _free =
     treeSitter.ts_current_free.asFunction<void Function(Pointer<Void>)>();
+
+/// Do not use [malloc.free] to free memory allocated by Tree-Sitter.
+/// Use this function instead.
+/// Because Windows uses a non-POSIX memory allocator.
 void free(Pointer ptr) {
   _free(ptr.cast());
 }
