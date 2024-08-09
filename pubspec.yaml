@@ -34,7 +34,8 @@ flutter:
         ffiPlugin: true
 
 ffigen:
-  output: "lib/bindings.g.dart"
+  name: 'TreeSitter'
+  output: "lib/src/bindings.g.dart"
   compiler-opts:
     - "-Isrc/include"
   headers:
@@ -47,3 +48,6 @@ ffigen:
   globals:
     include:
       - "ts_.*"
+  macros:
+    include:
+      - "TREE_SITTER_.*"

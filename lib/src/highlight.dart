@@ -1,62 +1,31 @@
 import 'dart:ffi';
 
-import 'package:ffi/ffi.dart';
 import 'bindings.g.dart';
-import 'flutter_tree_sitter.dart';
+import 'node.dart';
+import 'query.dart';
 
 typedef HighlightMap = Map<(int line, int col), String>;
 
 class Highlighter {
-  late final Pointer<TSQuery> query;
+  late final TreeSitterQuery query;
 
   Highlighter(Pointer<TSLanguage> language, {required String highlightQuery}) {
-    final queryBuf = highlightQuery.toNativeUtf8().cast<Char>();
-    final errorOffset = malloc<Uint32>();
-    final errorType = malloc<UnsignedInt>();
-    query = treeSitter.ts_query_new(
-      language,
-      queryBuf,
-      highlightQuery.length,
-      errorOffset,
-      errorType,
-    );
-    final error = TSQueryError.fromValue(errorType.value);
-    malloc.free(queryBuf);
-    malloc.free(errorOffset);
-    malloc.free(errorType);
-    if (error != TSQueryError.TSQueryErrorNone) {
-      throw error;
-    }
+    query = TreeSitterQuery(language, highlightQuery);
   }
 
   /// Release memory.
   void delete() {
-    treeSitter.ts_query_delete(query);
+    query.delete();
   }
 
   /// Transform [TSNode] to semantic tokens.
   HighlightMap highlight(TSNode rootNode) {
     final highlightMap = HighlightMap();
-    final queryCursor = treeSitter.ts_query_cursor_new();
-    treeSitter.ts_query_cursor_exec(queryCursor, query, rootNode);
-    final match = malloc<TSQueryMatch>();
-    while (treeSitter.ts_query_cursor_next_match(queryCursor, match)) {
-      for (var i = 0; i < match.ref.capture_count; i += 1) {
-        final capture = match.ref.captures[i];
-        final nameLength = malloc<Uint32>();
-        final name = treeSitter
-            .ts_query_capture_name_for_id(query, capture.index, nameLength)
-            .cast<Utf8>()
-            .toDartString(length: nameLength.value);
-        final position = (
-          treeSitter.ts_node_start_byte(capture.node),
-          treeSitter.ts_node_end_byte(capture.node)
-        );
-        if (!highlightMap.containsKey(position)) {
-          highlightMap[position] = name;
-        }
+    for (final capture in query.captures(rootNode)) {
+      final position = (capture.node.startByte, capture.node.endByte);
+      if (!highlightMap.containsKey(position)) {
+        highlightMap[position] = capture.name;
       }
-      treeSitter.ts_query_cursor_remove_match(queryCursor, match.ref.id);
     }
     return highlightMap;
   }

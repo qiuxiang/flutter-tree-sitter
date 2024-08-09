@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tree_sitter/lib.dart';
+import 'package:flutter_tree_sitter/flutter_tree_sitter.dart';
 
 void main() {
   runApp(const App());
