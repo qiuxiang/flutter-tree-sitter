@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'bindings.g.dart';
@@ -30,40 +31,34 @@ class Highlighter {
     return highlightMap;
   }
 
-  List<List<HighlightSpan>> render(
+  List<HighlightSpan> render(
     String code,
     HighlightMap highlightMap,
   ) {
-    final codeLines = code.split('\n');
+    final codeBytes = utf8.encode(code);
     final highlightIter = highlightMap.keys.iterator;
     var hasHighlight = highlightIter.moveNext();
-    var lineStart = 0;
-    final lines = <List<HighlightSpan>>[];
-    for (final codeLine in codeLines) {
-      final line = <HighlightSpan>[];
-      var text = '';
-      for (var i = 0; i < codeLine.length; i += 1) {
-        final highlight = hasHighlight ? highlightIter.current : null;
-        if (highlight != null && highlight.$1 == lineStart + i) {
-          if (text.isNotEmpty) {
-            line.add(HighlightSpan('', text));
-          }
-          line.add(HighlightSpan(
-            highlightMap[highlight]!,
-            codeLine.substring(i, highlight.$2 - lineStart),
-          ));
-          i += highlight.$2 - highlight.$1 - 1;
-          hasHighlight = highlightIter.moveNext();
-          text = '';
-        } else {
-          text += codeLine[i];
+    final lines = <HighlightSpan>[];
+    var textBytes = <int>[];
+    for (var i = 0; i < codeBytes.length; i += 1) {
+      final highlight = hasHighlight ? highlightIter.current : null;
+      if (highlight != null && highlight.$1 == i) {
+        if (textBytes.isNotEmpty) {
+          lines.add(HighlightSpan('', utf8.decode(textBytes)));
         }
+        lines.add(HighlightSpan(
+          highlightMap[highlight]!,
+          utf8.decode(codeBytes.sublist(i, highlight.$2)),
+        ));
+        i += highlight.$2 - highlight.$1 - 1;
+        hasHighlight = highlightIter.moveNext();
+        textBytes.clear();
+      } else {
+        textBytes.add(codeBytes[i]);
       }
-      if (text.isNotEmpty) {
-        line.add(HighlightSpan('', text));
-      }
-      lineStart += codeLine.length + 1;
-      lines.add(line);
+    }
+    if (textBytes.isNotEmpty) {
+      lines.add(HighlightSpan('', utf8.decode(textBytes)));
     }
     return lines;
   }

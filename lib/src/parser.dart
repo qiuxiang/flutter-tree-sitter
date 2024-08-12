@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
@@ -13,7 +14,7 @@ class TreeSitterParser {
   TreeSitterTree parseString(String input, {Pointer<TSTree>? oldTree}) {
     final buffer = input.toNativeUtf8().cast<Char>();
     final tree = treeSitter.ts_parser_parse_string(
-        self, oldTree ?? nullptr, buffer, input.length);
+        self, oldTree ?? nullptr, buffer, utf8.encode(input).length);
     malloc.free(buffer);
     return TreeSitterTree(tree);
   }
