@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:typed_data';
 
 import 'bindings.g.dart';
 import 'node.dart';
 import 'query.dart';
 
-typedef HighlightMap = Map<(int line, int col), String>;
+typedef Position = (int, int);
+typedef HighlightMap = Map<Position, String>;
 
 class Highlighter {
   late final TreeSitterQuery query;
@@ -32,10 +34,9 @@ class Highlighter {
   }
 
   List<HighlightSpan> render(
-    String code,
+    Uint8List codeBytes,
     HighlightMap highlightMap,
   ) {
-    final codeBytes = utf8.encode(code);
     final highlightIter = highlightMap.keys.iterator;
     var hasHighlight = highlightIter.moveNext();
     final lines = <HighlightSpan>[];

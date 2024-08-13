@@ -11,10 +11,10 @@ class TreeSitterParser {
   final self = treeSitter.ts_parser_new();
 
   /// Use the parser to parse some source code stored in one contiguous buffer.
-  TreeSitterTree parseString(String input, {Pointer<TSTree>? oldTree}) {
+  TreeSitterTree parseString(String input, {TreeSitterTree? oldTree}) {
     final buffer = input.toNativeUtf8().cast<Char>();
     final tree = treeSitter.ts_parser_parse_string(
-        self, oldTree ?? nullptr, buffer, utf8.encode(input).length);
+        self, oldTree?.self ?? nullptr, buffer, utf8.encode(input).length);
     malloc.free(buffer);
     return TreeSitterTree(tree);
   }
