@@ -1,16 +1,21 @@
 name: release
 on:
   push:
-    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
 jobs:
   release:
     permissions:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - name: Build
+        run: |
+          make init
+          cd example
+          flutter create . --platforms linux
+          flutter build linux
       - name: Update changelog
         run: |
           export version=$(echo ${{ github.ref_name }} | sed s/v//)
