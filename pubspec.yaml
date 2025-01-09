@@ -1,7 +1,7 @@
 name: flutter_tree_sitter
-description: "A new Flutter FFI plugin project."
+description: "Tree-sitter for flutter, supports android, ios, linux, macos, windows."
 version: 0.0.1
-homepage:
+homepage: https://github.com/qiuxiang/flutter-tree-sitter
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -34,7 +34,7 @@ flutter:
         ffiPlugin: true
 
 ffigen:
-  name: 'TreeSitter'
+  name: "TreeSitter"
   output: "lib/src/bindings.g.dart"
   compiler-opts:
     - "-Isrc/include"
