@@ -2,6 +2,7 @@ name: flutter_tree_sitter
 description: "Tree-sitter for flutter, supports android, ios, linux, macos, windows."
 version: 0.0.1
 homepage: https://github.com/qiuxiang/flutter-tree-sitter
+repository: https://github.com/qiuxiang/flutter-tree-sitter
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -45,6 +46,9 @@ ffigen:
   functions:
     include:
       - "ts_.*"
+    exclude:
+      - "ts_stack_print_dot_graph"
+      - "ts_subtree__print_dot_graph"
   globals:
     include:
       - "ts_.*"

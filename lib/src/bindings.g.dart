@@ -4411,27 +4411,6 @@ class TreeSitter {
   late final _ts_stack_clear =
       _ts_stack_clearPtr.asFunction<void Function(ffi.Pointer<Stack>)>();
 
-  bool ts_stack_print_dot_graph(
-    ffi.Pointer<Stack> arg0,
-    ffi.Pointer<TSLanguage> arg1,
-    ffi.Pointer<_IO_FILE> arg2,
-  ) {
-    return _ts_stack_print_dot_graph(
-      arg0,
-      arg1,
-      arg2,
-    );
-  }
-
-  late final _ts_stack_print_dot_graphPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Bool Function(ffi.Pointer<Stack>, ffi.Pointer<TSLanguage>,
-              ffi.Pointer<_IO_FILE>)>>('ts_stack_print_dot_graph');
-  late final _ts_stack_print_dot_graph =
-      _ts_stack_print_dot_graphPtr.asFunction<
-          bool Function(ffi.Pointer<Stack>, ffi.Pointer<TSLanguage>,
-              ffi.Pointer<_IO_FILE>)>();
-
   ffi.Pointer<ffi.Char> ts_string_input_read(
     ffi.Pointer<ffi.Void> _self,
     int byte,
@@ -5246,35 +5225,6 @@ class TreeSitter {
   late final _ts_subtree__write_char_to_string =
       _ts_subtree__write_char_to_stringPtr
           .asFunction<int Function(ffi.Pointer<ffi.Char>, int, int)>();
-
-  void ts_subtree__print_dot_graph(
-    ffi.Pointer<Subtree> self,
-    int start_offset,
-    ffi.Pointer<TSLanguage> language,
-    int alias_symbol,
-    ffi.Pointer<_IO_FILE> f,
-  ) {
-    return _ts_subtree__print_dot_graph(
-      self,
-      start_offset,
-      language,
-      alias_symbol,
-      f,
-    );
-  }
-
-  late final _ts_subtree__print_dot_graphPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<Subtree>,
-              ffi.Uint32,
-              ffi.Pointer<TSLanguage>,
-              ffi.Uint16,
-              ffi.Pointer<_IO_FILE>)>>('ts_subtree__print_dot_graph');
-  late final _ts_subtree__print_dot_graph =
-      _ts_subtree__print_dot_graphPtr.asFunction<
-          void Function(ffi.Pointer<Subtree>, int, ffi.Pointer<TSLanguage>, int,
-              ffi.Pointer<_IO_FILE>)>();
 
   TreeCursorStep ts_tree_cursor_goto_last_child_internal(
     ffi.Pointer<TSTreeCursor> _self,
@@ -6406,83 +6356,6 @@ final class StackSummary extends ffi.Struct {
   @ffi.Uint32()
   external int capacity;
 }
-
-final class _IO_FILE extends ffi.Struct {
-  @ffi.Int()
-  external int _flags;
-
-  external ffi.Pointer<ffi.Char> _IO_read_ptr;
-
-  external ffi.Pointer<ffi.Char> _IO_read_end;
-
-  external ffi.Pointer<ffi.Char> _IO_read_base;
-
-  external ffi.Pointer<ffi.Char> _IO_write_base;
-
-  external ffi.Pointer<ffi.Char> _IO_write_ptr;
-
-  external ffi.Pointer<ffi.Char> _IO_write_end;
-
-  external ffi.Pointer<ffi.Char> _IO_buf_base;
-
-  external ffi.Pointer<ffi.Char> _IO_buf_end;
-
-  external ffi.Pointer<ffi.Char> _IO_save_base;
-
-  external ffi.Pointer<ffi.Char> _IO_backup_base;
-
-  external ffi.Pointer<ffi.Char> _IO_save_end;
-
-  external ffi.Pointer<_IO_marker> _markers;
-
-  external ffi.Pointer<_IO_FILE> _chain;
-
-  @ffi.Int()
-  external int _fileno;
-
-  @ffi.Int()
-  external int _flags2;
-
-  @ffi.Long()
-  external int _old_offset;
-
-  @ffi.UnsignedShort()
-  external int _cur_column;
-
-  @ffi.SignedChar()
-  external int _vtable_offset;
-
-  @ffi.Array.multi([1])
-  external ffi.Array<ffi.Char> _shortbuf;
-
-  external ffi.Pointer<ffi.Void> _lock;
-
-  @ffi.Long()
-  external int _offset;
-
-  external ffi.Pointer<_IO_codecvt> _codecvt;
-
-  external ffi.Pointer<_IO_wide_data> _wide_data;
-
-  external ffi.Pointer<_IO_FILE> _freeres_list;
-
-  external ffi.Pointer<ffi.Void> _freeres_buf;
-
-  @ffi.Size()
-  external int __pad5;
-
-  @ffi.Int()
-  external int _mode;
-
-  @ffi.Array.multi([20])
-  external ffi.Array<ffi.Char> _unused2;
-}
-
-final class _IO_marker extends ffi.Opaque {}
-
-final class _IO_codecvt extends ffi.Opaque {}
-
-final class _IO_wide_data extends ffi.Opaque {}
 
 final class TokenCache extends ffi.Opaque {}
 
