@@ -37,8 +37,6 @@ flutter:
 ffigen:
   name: "TreeSitter"
   output: "lib/src/bindings.g.dart"
-  compiler-opts:
-    - "-Isrc/include"
   headers:
     entry-points:
       - "./src/flutter_tree_sitter.c"
