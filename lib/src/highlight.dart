@@ -26,9 +26,7 @@ class Highlighter {
     final highlightMap = HighlightMap();
     for (final capture in query.captures(rootNode)) {
       final position = (capture.node.startByte, capture.node.endByte);
-      if (!highlightMap.containsKey(position)) {
-        highlightMap[position] = capture.name;
-      }
+      highlightMap[position] = capture.name;
     }
     return highlightMap;
   }
