@@ -63,10 +63,11 @@ extension TSNodeExtension on TSNode {
   /// iterating over the node's ancestors.
   TSNode? get parent => treeSitter.ts_node_parent(this)._nullable;
 
-  /// Get the node's child that contains `descendant`.
-  TSNode? childContainingDescendant(TSNode descendant) => treeSitter
-      .ts_node_child_containing_descendant(this, descendant)
-      ._nullable;
+  /// Get the node that contains `descendant`.
+  ///
+  /// Note that this can return `descendant` itself.
+  TSNode? childWithDescendant(TSNode descendant) =>
+      treeSitter.ts_node_child_with_descendant(this, descendant)._nullable;
 
   /// Get the node's children
   List<TSNode> get children {

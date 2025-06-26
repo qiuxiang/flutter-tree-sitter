@@ -1,4 +1,4 @@
-version = 0.22.6
+version = 0.25.6
 
 init:
 	mkdir -p build

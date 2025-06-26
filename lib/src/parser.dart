@@ -131,7 +131,7 @@ class TreeSitterParser {
     return treeSitter.ts_parser_cancellation_flag(self);
   }
 
-  /// Release memory.
+  /// Delete the parser, freeing all of the memory that it used.
   void delete() {
     treeSitter.ts_parser_delete(self);
   }
