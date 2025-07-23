@@ -38,7 +38,7 @@ class TreeSitterTree {
   ///
   /// The returned pointer must be freed by the caller.
   List<TSRange> get includedRanges {
-    final lengthPtr = malloc<Uint32>();
+    final lengthPtr = malloc<ffi.Uint32>();
     final rangesPtr = treeSitter.ts_tree_included_ranges(self, lengthPtr);
     final length = lengthPtr.value;
     malloc.free(lengthPtr);
@@ -84,7 +84,7 @@ class TreeSitterTree {
   /// for freeing it using `free`. The length of the array will be written to the
   /// given `length` pointer.
   List<TSRange> getChangedRanges(TreeSitterTree newTree) {
-    final lengthPtr = malloc<Uint32>();
+    final lengthPtr = malloc<ffi.Uint32>();
     final rangesPtr = treeSitter.ts_tree_get_changed_ranges(self, newTree.self, lengthPtr);
     final length = lengthPtr.value;
     malloc.free(lengthPtr);

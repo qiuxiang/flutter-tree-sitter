@@ -155,7 +155,7 @@ class TreeSitterParser {
   ///
   /// The returned ranges are owned by the parser. The length of the array will be written to the returned list.
   List<TSRange> getIncludedRanges() {
-    final countPtr = malloc<Uint32>();
+    final countPtr = malloc<ffi.Uint32>();
     final rangesPtr = treeSitter.ts_parser_included_ranges(self, countPtr);
     final count = countPtr.value;
     malloc.free(countPtr);
@@ -217,7 +217,7 @@ class TreeSitterParser {
   /// from this pointer during parsing. If it reads a non-zero value, it will
   /// halt early, returning NULL. See [parse] for more information.
   @Deprecated('Use parseWithOptions and pass in a callback instead, this will be removed in 0.26.')
-  void setCancelationFlag(Pointer<Size> cancellationFlag) {
+  void setCancelationFlag(Pointer<ffi.Size> cancellationFlag) {
     treeSitter.ts_parser_set_cancellation_flag(self, cancellationFlag);
   }
 
@@ -225,7 +225,7 @@ class TreeSitterParser {
   ///
   /// Get the parser's current cancellation flag pointer.
   @Deprecated('Use parseWithOptions and pass in a callback instead, this will be removed in 0.26.')
-  Pointer<Size> getCancelationFlag() {
+  Pointer<ffi.Size> getCancelationFlag() {
     return treeSitter.ts_parser_cancellation_flag(self);
   }
 

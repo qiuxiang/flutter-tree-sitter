@@ -230,8 +230,4 @@ extension TSNodeExtension on TSNode {
   bool isEqual(TSNode other) {
     return treeSitter.ts_node_eq(this, other);
   }
-
-  String toDartString() {
-    return treeSitter.ts_node_string(this).toDartString();
-  }
 }
