@@ -13,10 +13,21 @@ extension TSNodeExtension on TSNode {
   /// Get the node's type as a null-terminated string.
   String get type => treeSitter.ts_node_type(this).toDartString();
 
+  /// Get the node's type as a numerical id.
+  int get symbol => treeSitter.ts_node_symbol(this);
+
+  /// Get the node's language.
+  Pointer<TSLanguage> get language => treeSitter.ts_node_language(this);
+
   /// Get the node's type as it appears in the grammar ignoring aliases as a
   /// null-terminated string.
   String get grammaryType =>
       treeSitter.ts_node_grammar_type(this).toDartString();
+
+  /// Get the node's type as a numerical id as it appears in the grammar ignoring
+  /// aliases. This should be used in [ts_language_next_state] instead of
+  /// [symbol].
+  int get grammarSymbol => treeSitter.ts_node_grammar_symbol(this);
 
   /// Check if the node is *named*. Named nodes correspond to named rules in the
   /// grammar, whereas *anonymous* nodes correspond to string literals in the
@@ -57,6 +68,17 @@ extension TSNodeExtension on TSNode {
 
   /// Get the node's end position in terms of rows and columns.
   TSPoint get endPoint => treeSitter.ts_node_end_point(this);
+
+  /// Get an S-expression representing the node as a string.
+  ///
+  /// This string is allocated with `malloc` and the caller is responsible for
+  /// freeing it using `free`.
+  String get string {
+    final ptr = treeSitter.ts_node_string(this);
+    final result = ptr.toDartString();
+    malloc.free(ptr);
+    return result;
+  }
 
   /// Get the node's immediate parent.
   /// Prefer [childContainingDescendant] for
@@ -106,6 +128,16 @@ extension TSNodeExtension on TSNode {
   TSNode? get previousNamedSibling =>
       treeSitter.ts_node_prev_named_sibling(this)._nullable;
 
+  /// Get the node's first child that contains or starts after the given byte offset.
+  TSNode? firstChildForByte(int byte) {
+    return treeSitter.ts_node_first_child_for_byte(this, byte)._nullable;
+  }
+
+  /// Get the node's first named child that contains or starts after the given byte offset.
+  TSNode? firstNamedChildForByte(int byte) {
+    return treeSitter.ts_node_first_named_child_for_byte(this, byte)._nullable;
+  }
+
   /// Get the node's number of descendants, including one for the node itself.
   int get descendantCount => treeSitter.ts_node_descendant_count(this);
 
@@ -142,6 +174,13 @@ extension TSNodeExtension on TSNode {
     return pointer == nullptr ? null : pointer.toDartString();
   }
 
+  /// Get the field name for node's named child at the given index, where zero
+  /// represents the first named child. Returns NULL, if no field is found.
+  String? fieldNameForNamedChild(int namedChildIndex) {
+    final pointer = treeSitter.ts_node_field_name_for_named_child(this, namedChildIndex);
+    return pointer == nullptr ? null : pointer.toDartString();
+  }
+
   /// Get the smallest node within this node that spans the given range of bytes
   /// or (row, column) positions.
   TSNode? descendantForRange(int start, int end) {
@@ -168,6 +207,28 @@ extension TSNodeExtension on TSNode {
     return treeSitter
         .ts_node_named_descendant_for_point_range(this, start, end)
         ._nullable;
+  }
+
+  /// Edit the node to keep it in-sync with source code that has been edited.
+  ///
+  /// This function is only rarely needed. When you edit a syntax tree with the
+  /// [TreeSitterTree.edit] function, all of the nodes that you retrieve from the tree
+  /// afterward will already reflect the edit. You only need to use [edit]
+  /// when you have a [TSNode] instance that you want to keep and continue to use
+  /// after an edit.
+  void edit(TSInputEdit edit) {
+    final nodePtr = malloc<TSNode>();
+    nodePtr.ref = this;
+    final editPtr = malloc<TSInputEdit>();
+    editPtr.ref = edit;
+    treeSitter.ts_node_edit(nodePtr, editPtr);
+    malloc.free(nodePtr);
+    malloc.free(editPtr);
+  }
+
+  /// Check if two nodes are identical.
+  bool isEqual(TSNode other) {
+    return treeSitter.ts_node_eq(this, other);
   }
 
   String toDartString() {
